@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from typing import Callable, Dict, Optional
 
 from .common import select_versions
@@ -17,9 +18,6 @@ def _default_exec_resolver(ctx: CondaContext) -> ExecutableResolver:
         if os.path.isfile(exe) and os.access(exe, os.X_OK):
             return exe
         return None
-
-    import os
-
     return _resolver
 
 
