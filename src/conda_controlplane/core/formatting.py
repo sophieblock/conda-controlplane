@@ -10,14 +10,14 @@ Report = Dict[str, object]
 def _fmt_packages(packages: Dict[str, str]) -> List[str]:
     if not packages:
         return ["  (none detected)"]
-    width = max(len(n) for n in packages) if packages else 0
+    width = max(len(n) for n in packages)
     return [f"  {name.ljust(width)}  {packages[name]}" for name in sorted(packages)]
 
 
 def _fmt_execs(execs: Dict[str, str | None]) -> List[str]:
     if not execs:
         return ["  (none detected)"]
-    width = max(len(n) for n in execs) if execs else 0
+    width = max(len(n) for n in execs)
     lines: List[str] = []
     for name in sorted(execs):
         path = execs[name]
