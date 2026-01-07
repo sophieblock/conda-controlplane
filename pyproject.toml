@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "conda-controlplane"
+version = "0.1.0"
+description = "Inspect conda base control-plane tooling (solvers/auth/platform, compiler metas, packaging helpers)."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Your Name" }]
+keywords = ["conda", "control-plane", "base-env", "packaging", "tooling"]
+dependencies = []
+
+[project.scripts]
+conda-controlplane = "conda_controlplane.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
