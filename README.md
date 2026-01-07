@@ -1,37 +1,63 @@
 # conda-controlplane
 
-A small CLI to inspect **conda base** *control-plane* tooling — the stuff that orchestrates environments, builds, and packaging, rather than ending up on your runtime `LD_LIBRARY_PATH`.
+A small CLI to inspect the **conda base** *control-plane* tooling — the solvers, compilers, packaging helpers, and network stack that orchestrate environments rather than shipping in your runtime `LD_LIBRARY_PATH`.
 
-It reports three categories:
+It reports four categories:
 
-1. Solver plugins, auth helpers, platform detection
-2. Compiler metapackages (control-plane; usually env-scoped)
-3. Packaging helpers (wheel build/repair/publish tooling)
+1. Solvers/auth/platform tagging
+2. Compiler metapackages & build orchestrators
+3. Packaging helpers (build/repair/publish)
+4. Network/TLS stack used by conda
 
 This tool finds base using `conda info --base` (when possible) and queries package presence using `conda list -p <base_prefix>`.  
 
 ## Repo Layout
-```csharp
+```
 conda-controlplane/
   pyproject.toml
   README.md
-  .gitignore
-  src/
-    conda_controlplane/
-      __init__.py
-      cli.py
-      conda.py
-      report.py
-  zsh/
-    conda-controlplane.zsh
-  docs/
-    overview.md
-    base-env-policy.md
-  scripts/
-    dev_install.sh
+  src/conda_controlplane/
+    core/          # OS-agnostic inspection helpers
+    cli/           # argparse-based CLI
+    shell/         # optional zsh shim
   tests/
-    test_report.py
-  .github/
-    prompts/
-      conda-control-plane-inspector.prompt.md
+  docs/
 ```
+
+## Installation
+
+```bash
+python -m pip install conda-controlplane
+```
+
+## CLI
+
+```bash
+conda-controlplane --help
+conda-controlplane solvers --format summary
+conda-controlplane all --format json --verbose
+```
+
+Supported subcommands: `solvers`, `compilers`, `packaging`, `network`, `all`.
+
+Formats: `summary` (default), `table`, `json`. Use `--verbose` to include notes.
+
+## Zsh shim
+
+Source the bundled shim for helper functions:
+
+```bash
+source "$(python - <<'PY'
+import conda_controlplane.shell as sh
+print(sh.zsh_shim_path())
+PY
+)"
+```
+
+Shim functions:
+
+- `conda-show-solvers`
+- `conda-show-compilers`
+- `conda-show-packaging`
+- `conda-show-network`
+- `conda-show-controlplane`
