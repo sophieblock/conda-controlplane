@@ -14,10 +14,13 @@ keywords = ["conda", "control-plane", "base-env", "packaging", "tooling"]
 dependencies = []
 
 [project.scripts]
-conda-controlplane = "control_controlplane.cli:main"
+conda-controlplane = "conda_controlplane.cli.main:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+"conda_controlplane.shell" = ["zsh_shim.zsh"]
