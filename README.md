@@ -10,28 +10,55 @@ It reports three categories:
 
 This tool finds base using `conda info --base` (when possible) and queries package presence using `conda list -p <base_prefix>`.  
 
-## Repo Layout
-```csharp
-conda-controlplane/
-  pyproject.toml
-  README.md
-  .gitignore
-  src/
-    conda_controlplane/
-      __init__.py
-      cli.py
-      conda.py
-      report.py
-  zsh/
-    conda-controlplane.zsh
-  docs/
-    overview.md
-    base-env-policy.md
-  scripts/
-    dev_install.sh
-  tests/
-    test_report.py
-  .github/
-    prompts/
-      conda-control-plane-inspector.prompt.md
+## Install (developer mode)
+
+From the repo root:
+
+```zsh
+python -m pip install -e .
 ```
+
+After install, the command is:
+```zsh
+conda-controlplane --help
+```
+
+## Install via pipx (recommended for “control-plane” CLIs)
+pipx installs Python apps in an isolated environment and exposes their entry-point commands.
+
+Example patterns:
+- pipx install . (local folder)
+- pipx install git+<repo-url> (from source control)
+
+## Usage 
+Show everything:
+```zsh
+conda-controlplane report
+```
+
+Only one section:
+```zsh
+conda-controlplane solvers
+conda-controlplane compilers
+conda-controlplane packaging
+conda-controlplane binaries
+```
+JSON output:
+
+```zsh
+conda-controlplane report --json
+```
+
+Override base prefix (rarely needed):
+```zsh
+conda-controlplane report --prefix /path/to/your/base
+```
+## Zsh wrappers 
+
+If you prefer your original `conda-show-*` commands, source:
+`zsh/conda-controlplane.zsh` from your `.zshrc`.
+
+## Notes
+- Read-only inspection: no PATH edits, no env-var exports.
+
+- Cross-platform: macOS/Linux detection for delocate/auditwheel/patchelf.
