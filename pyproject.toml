@@ -14,7 +14,7 @@ keywords = ["conda", "control-plane", "base-env", "packaging", "tooling"]
 dependencies = []
 
 [project.scripts]
-conda-controlplane = "conda_controlplane.cli:main"
+conda-controlplane = "control_controlplane.cli:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}

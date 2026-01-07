@@ -1,0 +1,93 @@
+# AI Toolkit / Agent tool manifest for conda-controlplane
+#
+# This manifest describes Python-callable tools backed by `control_controlplane.tools`.
+# It is suitable as a starting point for AI runtimes that support YAML-based tool
+# configuration. Adjust the schema/keys as needed for your specific agent framework.
+
+name: conda-controlplane-tools
+version: 0.1.0
+summary: Read-only inspection tools for a conda base environment.
+
+python:
+  module: control_controlplane.tools
+
+# Individual tools exposed to the agent runtime.
+# The `handler` is a fully-qualified function name in the `python.module` above.
+#
+# Parameter schemas are intentionally minimal and human-readable; you can adapt
+# them to the exact JSON Schema or type system your agent framework expects.
+
+tools:
+  - name: get_solvers_section
+    handler: get_solvers_section
+    description: >-
+      Inspect solver/auth/platform-related packages and executables in a conda base
+      environment. Returns a structured section with package and executable info.
+    parameters:
+      type: object
+      properties:
+        prefix:
+          type: string
+          description: >-
+            Optional conda base prefix to inspect. If omitted, uses `conda info --base`.
+      required: []
+
+  - name: get_compilers_section
+    handler: get_compilers_section
+    description: >-
+      Inspect compiler metapackages and build orchestrators present in a conda base
+      environment, plus related executables in the base bin directory.
+    parameters:
+      type: object
+      properties:
+        prefix:
+          type: string
+          description: Optional conda base prefix override.
+      required: []
+
+  - name: get_packaging_section
+    handler: get_packaging_section
+    description: >-
+      Inspect packaging helpers (build, repair, publish tools) installed in a conda
+      base environment, including platform-specific wheel repair utilities.
+    parameters:
+      type: object
+      properties:
+        prefix:
+          type: string
+          description: Optional conda base prefix override.
+      required: []
+
+  - name: get_binaries
+    handler: get_binaries
+    description: >-
+      Summarise the contents of the base bin directory, reporting total entry count
+      and a sample list of binary names.
+    parameters:
+      type: object
+      properties:
+        prefix:
+          type: string
+          description: Optional conda base prefix override.
+        sample_n:
+          type: integer
+          description: Number of entries from the bin directory to include in the sample.
+          default: 20
+      required: []
+
+  - name: get_full_report
+    handler: get_full_report
+    description: >-
+      Produce a consolidated JSON-style report equivalent to `conda-controlplane report --json`,
+      including solvers, compilers, packaging sections, and a bin inventory.
+    parameters:
+      type: object
+      properties:
+        prefix:
+          type: string
+          description: Optional conda base prefix override.
+        sample_n:
+          type: integer
+          description: Number of entries from the bin directory to include in the binaries sample.
+          default: 20
+      required: []
