@@ -201,3 +201,21 @@ This is **your custom plugin**, designed to be:
 - Modular: Clear separation between inspection, formatting, and CLI
 - Testable: Dependency injection for external commands
 - Flexible: Multiple output formats for different use cases
+
+## Current Implementation Status
+
+### ✅ Completed
+- Plugin hook implementation in [plugin.py](../src/conda_controlplane/plugin.py)
+- Entry point registration in [pyproject.toml](../pyproject.toml)
+- Dual-mode support: both `conda controlplane` (plugin) and `conda-controlplane` (console script)
+- Import-safety test for plugin module
+- Core inspection logic for all categories (solvers, compilers, packaging, network)
+
+### 🚧 Remaining Tasks
+See [refactor-prompt.md](.github/prompts/refactor-prompt.md) for tactical cleanup tasks.
+
+## References
+
+- [Conda Plugin Documentation](https://docs.conda.io/projects/conda/en/latest/dev-guide/plugins/index.html)
+- [Introducing Conda Plugin Mechanism](https://www.anaconda.com/blog/introducing-a-new-plugin-mechanism-for-conda)
+- [Conda Plugin API](https://docs.conda.io/projects/conda/en/latest/dev-guide/api/conda/plugins/index.html)
