@@ -18,8 +18,8 @@ from conda_controlplane.core.inspect_packaging import inspect_packaging
 from conda_controlplane.core.inspect_solvers import inspect_solvers
 
 
-def _build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="conda-controlplane")
+def _build_parser(*, prog: str) -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(prog=prog)
     parser.add_argument("--base-prefix", help="Override base prefix (default: conda info --base)")
     parser.add_argument(
         "--format",
@@ -43,8 +43,9 @@ def _payload_for_category(name: str, category: Dict[str, object], ctx) -> Dict[s
     }
 
 
-def main(argv: Optional[List[str]] = None) -> int:
-    args = _build_parser().parse_args(argv)
+def main(argv: Optional[List[str]] = None, *, prog: Optional[str] = None) -> int:
+    prog = prog or "conda-controlplane"
+    args = _build_parser(prog=prog).parse_args(argv)
 
     try:
         ctx = make_conda_context(base_prefix=args.base_prefix)

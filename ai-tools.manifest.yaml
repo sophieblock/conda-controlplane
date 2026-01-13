@@ -1,6 +1,6 @@
 # AI Toolkit / Agent tool manifest for conda-controlplane
 #
-# This manifest describes Python-callable tools backed by `control_controlplane.tools`.
+# This manifest describes Python-callable tools backed by `conda_controlplane.tools`.
 # It is suitable as a starting point for AI runtimes that support YAML-based tool
 # configuration. Adjust the schema/keys as needed for your specific agent framework.
 
@@ -9,7 +9,7 @@ version: 0.1.0
 summary: Read-only inspection tools for a conda base environment.
 
 python:
-  module: control_controlplane.tools
+  module: conda_controlplane.tools
 
 # Individual tools exposed to the agent runtime.
 # The `handler` is a fully-qualified function name in the `python.module` above.
@@ -58,6 +58,19 @@ tools:
           description: Optional conda base prefix override.
       required: []
 
+  - name: get_network_section
+    handler: get_network_section
+    description: >-
+      Inspect network/TLS-related packages and executables in a conda base
+      environment.
+    parameters:
+      type: object
+      properties:
+        prefix:
+          type: string
+          description: Optional conda base prefix override.
+      required: []
+
   - name: get_binaries
     handler: get_binaries
     description: >-
@@ -78,8 +91,8 @@ tools:
   - name: get_full_report
     handler: get_full_report
     description: >-
-      Produce a consolidated JSON-style report equivalent to `conda-controlplane report --json`,
-      including solvers, compilers, packaging sections, and a bin inventory.
+      Produce a consolidated JSON-style report equivalent to `conda-controlplane all --format json`,
+      including solvers, compilers, packaging, network, and a bin inventory.
     parameters:
       type: object
       properties:

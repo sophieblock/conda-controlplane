@@ -21,6 +21,12 @@ def _exec_resolver(names=None):
 
 
 class TestControlPlane(unittest.TestCase):
+    def test_plugin_module_import_safe(self):
+        # The conda plugin module must be import-safe in environments where `conda`
+        # is not installed (e.g. unit test runners). Conda will import it when
+        # discovering plugins via entry points.
+        import conda_controlplane.plugin  # noqa: F401
+
     def test_guess_bindir_prefers_bin(self):
         with mock.patch("os.path.isdir", return_value=True):
             self.assertEqual(guess_bindir("/base"), "/base/bin")

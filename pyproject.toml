@@ -16,11 +16,15 @@ dependencies = []
 [project.scripts]
 conda-controlplane = "conda_controlplane.cli.main:main"
 
+[project.entry-points."conda"]
+conda-controlplane = "conda_controlplane.plugin"
+
 [tool.setuptools]
 package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
+exclude = ["control_controlplane*"]
 
 [tool.setuptools.package-data]
 "conda_controlplane.shell" = ["zsh_shim.zsh"]

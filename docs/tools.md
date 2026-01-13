@@ -1,13 +1,13 @@
 # condacontrolplane Tools
 
 This project exposes a small, read-only "control plane" API for inspecting a conda base environment.
-These helpers live in `control_controlplane.tools` and are safe to call from other Python code or
+These helpers live in `conda_controlplane.tools` and are safe to call from other Python code or
 from AI agents/tooling.
 
 All functions auto-detect the conda base environment by default using `conda info --base`. You can
 override the base prefix with a `prefix` argument.
 
-## Python module: `control_controlplane.tools`
+## Python module: `conda_controlplane.tools`
 
 ### `get_solvers_section(prefix: str | None = None) -> Section`
 
@@ -73,7 +73,7 @@ This is useful for quick, low-cost visibility into how "busy" the base bin is.
 
 Return a JSON-serialisable payload equivalent to the CLI command:
 
-- `conda-controlplane report --json`
+- `conda-controlplane all --format json`
 
 The result has the shape:
 
@@ -81,17 +81,12 @@ The result has the shape:
 {
   "base_prefix": "<path>",
   "bin_dir": "<path>",
-  "sections": [
-    {
-      "title": "...",
-      "base_prefix": "...",
-      "bin_dir": "...",
-      "packages": { "name": "version", ... },
-      "executables": { "exe": "path-or-null", ... },
-      "notes": ["..."]
-    },
-    // solvers, compilers, packaging sections in order
-  ],
+  "categories": {
+    "solvers": { "title": "...", "packages": {"name": "version"}, "executables": {"exe": null}, "notes": ["..."] },
+    "compilers": { "title": "...", "packages": {"name": "version"}, "executables": {"exe": null}, "notes": ["..."] },
+    "packaging": { "title": "...", "packages": {"name": "version"}, "executables": {"exe": null}, "notes": ["..."] },
+    "network": { "title": "...", "packages": {"name": "version"}, "executables": {"exe": null}, "notes": ["..."] }
+  },
   "binaries": {
     "count": 123,
     "sample": ["conda", "python", ...]

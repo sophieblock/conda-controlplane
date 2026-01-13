@@ -26,27 +26,37 @@ conda-controlplane/
 
 ## Installation
 
-```bash
+```zsh
 python -m pip install conda-controlplane
+```
+
+If installed into the same environment as `conda`, the plugin registers a native subcommand:
+
+```zsh
+conda controlplane --help
 ```
 
 ## CLI
 
-```bash
+```zsh
+# Preferred (conda plugin):
+conda controlplane --help
+conda controlplane solvers --format summary
+conda controlplane all --format json --verbose
+
+# Compatibility console script (same behavior):
 conda-controlplane --help
-conda-controlplane solvers --format summary
-conda-controlplane all --format json --verbose
 ```
 
 Supported subcommands: `solvers`, `compilers`, `packaging`, `network`, `all`.
 
 Formats: `summary` (default), `table`, `json`. Use `--verbose` to include notes.
 
-## Zsh shim
+## Zsh Wrappers
 
-Source the bundled shim for helper functions:
+To source the bundled shim for helper functions:
 
-```bash
+```zsh
 source "$(python - <<'PY'
 import conda_controlplane.shell as sh
 print(sh.zsh_shim_path())
