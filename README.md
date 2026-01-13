@@ -37,14 +37,16 @@ conda controlplane --help
 ```
 
 ## CLI
-
+Preferred (conda plugin):
 ```zsh
-# Preferred (conda plugin):
 conda controlplane --help
 conda controlplane solvers --format summary
 conda controlplane all --format json --verbose
+```
 
-# Compatibility console script (same behavior):
+Compatibility console script (same behavior):
+
+```zsh
 conda-controlplane --help
 ```
 
